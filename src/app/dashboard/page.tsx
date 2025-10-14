@@ -1,7 +1,9 @@
 import StatCard from "@/components/statCard";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 async function getStats() {
-    const res = await fetch("http://localhost:3000/api/stats", {
+    const res = await fetch(`${BASE_URL}/api/stats`, {
         next: { revalidate: 5 },
     });
     return res.json();

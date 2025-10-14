@@ -1,7 +1,9 @@
 import StatDetail from "@/components/statDetail";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 async function getStatDetail(type: string) {
-    const res = await fetch(`http://localhost:3000/api/stats/${type}`, {
+    const res = await fetch(`${BASE_URL}/api/stats/${type}`, {
         next: { revalidate: 5 },
     });
     return res.json();

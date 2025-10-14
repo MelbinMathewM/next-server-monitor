@@ -4,14 +4,22 @@ import { useState, useTransition } from "react";
 import RefreshButton from "./refreshButton";
 import Chart from "./chart";
 
-export default function StatDetail({ data }: { data: any }) {
-    const [stat, setStat] = useState(data);
+interface StatData {
+    type: string;
+    value?: number | number[];
+    total?: number;
+    free?: number;
+    [key: string]: any;
+}
+
+export default function StatDetail({ data }: { data: StatData }) {
+    const [stat, setStat] = useState<StatData>(data);
     const [isPending, startTransition] = useTransition();
 
     async function refresh() {
         startTransition(async () => {
             const res = await fetch(`/api/stats/${stat.type.toLowerCase().split(" ")[0]}`);
-            const fresh = await res.json();
+            const fresh: StatData = await res.json();
             setStat(fresh);
         });
     }

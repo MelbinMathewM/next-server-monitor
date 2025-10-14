@@ -22,12 +22,12 @@ Shows CPU, Memory, and Uptime stats with dynamic routing and refresh functionali
 
 ## Live Demo
 
-[View Live Dashboard](https://<your-vercel-url>)
+[View Live Dashboard](https://next-server-monitor.vercel.app)
 
 ## How to Run Locally
 
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/melbinmathewm/next-server-monitor>
 cd next-server-monitor
 npm install
 npm run dev
