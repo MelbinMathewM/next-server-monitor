@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { getStatDetail } from "@/lib/systemInfo";
 
-export async function GET(_: Request, { params }: { params: { type: string }}) {
-    const data = getStatDetail(params.type);
+export async function GET(
+    request: Request,
+    context: { params: { type: string } }
+) {
+    const { params } = context;
+    const data = await getStatDetail(params.type);
     return NextResponse.json(data);
 }
