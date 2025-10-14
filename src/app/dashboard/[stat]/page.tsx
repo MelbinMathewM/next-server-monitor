@@ -2,7 +2,12 @@ import StatDetail from "@/components/statDetail";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-async function getStatDetail(type: string) {
+type StatData =
+    | { type: "CPU Load" | "Uptime"; value: number }
+    | { type: "Memory"; total: number; free: number; value?: number }
+    | { error: string };
+
+async function getStatDetail(type: string): Promise<StatData> {
     const res = await fetch(`${BASE_URL}/api/stats/${type}`, {
         next: { revalidate: 5 },
     });
@@ -10,19 +15,20 @@ async function getStatDetail(type: string) {
 }
 
 export default async function StatPage({ params }: { params: { stat: string } }) {
-    const stat = await getStatDetail(params.stat);
+    const { stat } = params;
+    const data = await getStatDetail(stat);
 
-    if (stat.error) {
+    if ("error" in data) {
         return (
             <div className="text-center py-20">
-                <h2 className="text-xl font-semibold text-red-500">{stat.error}</h2>
+                <h2 className="text-xl font-semibold text-red-500">{data.error}</h2>
             </div>
         );
     }
 
     return (
         <div className="p-8">
-            <StatDetail data={stat} />
+            <StatDetail data={data} />
         </div>
     );
 }
