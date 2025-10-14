@@ -4,13 +4,17 @@ import { useState, useTransition } from "react";
 import RefreshButton from "./refreshButton";
 import Chart from "./chart";
 
-interface StatData {
-    type: string;
-    value?: number | number[];
-    total?: number;
-    free?: number;
-    [key: string]: any;
-}
+export type StatData =
+    | {
+        type: "CPU Load" | "Uptime";
+        value: number;
+    }
+    | {
+        type: "Memory";
+        total: number;
+        free: number;
+        value?: number;
+    };
 
 export default function StatDetail({ data }: { data: StatData }) {
     const [stat, setStat] = useState<StatData>(data);
